@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutltiplication Table</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+
+    <div id="main">
+        <header>
+            <h1>Mutltiplication Table</h1>  
+        </header>
+
+        <!-- Seperator -->
+        <!-- <hr class="solid"> -->
+        <fieldset id="wrapper">
+            <!-- Text between border design -->
+            <legend><h3>Eljohn Agojo</h3></legend>
+
+                <form action="#" id="form-container">
+                    <!-- Input Fields with Floating Labels -->
+                    <div class="form-group">
+                        <input type="text" name="minimum_col_value" id="min_col_value" required placeholder=" ">
+                        <label for="min_col_value">Enter Minimum Column Value</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="max_col_value" id="max_col_value" required placeholder=" ">
+                        <label for="max_col_value">Enter Maximum Column Value</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="min_row_value" id="min_row_value" required placeholder=" ">
+                        <label for="min_row_value">Enter Minimum Row Value</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="max_row_value" id="max_row_value" required placeholder=" ">
+                        <label for="max_row_value">Enter Maximum Row Value</label>
+                    </div>
+                    <div class="button-container">
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            <div id="table-container"></div>
+        </fieldset>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
