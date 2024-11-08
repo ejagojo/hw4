@@ -1,3 +1,17 @@
+/*
+Name: Eljohn(EJ) Agojo
+Date: 10/28/2024
+File: script.js
+
+GUI Assignment: 
+    This assignment is about creating a web app that dynamically creates a multiplication table based on user input.
+    This assignment served as a way to implement javascript basics and error handling.
+
+Eljohn Agojo, UMass Lowell Computer Science, eljohn_agojo@student.uml.edu
+Copyright (c) 2024 by Eljohn. All rights reserved. May be freely copied or 
+excerpted for educational purposes with credit to the author.
+*/
+
 // Event listener 
 const form_container = document.getElementById("form-container");
 
@@ -14,6 +28,11 @@ form_container.addEventListener("submit", (e) => {
     const max_col_input_val = parseInt(max_col_input.value);
     const min_row_input_val = parseInt(min_row_input.value);
     const max_row_input_val = parseInt(max_row_input.value);
+    
+    console.log("The minimum column input: " + min_col_input_val);
+    console.log("The maximum column input: " + max_col_input_val);
+    console.log("The minimum row input: " + min_row_input_val);
+    console.log("The maximum row input: " + max_row_input_val);
 
     // Validate inputs and display error if necessary
     const validationResult = validateInputs(min_col_input_val, max_col_input_val, min_row_input_val, max_row_input_val);
@@ -147,7 +166,7 @@ function displayError(message) {
         errorElement.id = "error-message";
         errorElement.style.color = "red";
         errorElement.style.fontSize = "14px";
-        form_container.insertAdjacentElement("afterend", errorElement); // Insert above the form
+        form_container.insertAdjacentElement("beforebegin", errorElement); // Insert above the form
     }
     errorElement.textContent = message;
 }

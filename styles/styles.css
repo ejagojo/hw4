@@ -1,18 +1,32 @@
-/* General Page Styling */
+/*
+Name: Eljohn(EJ) Agojo
+Date: 10/28/2024
+File: styles.css
+
+GUI Assignment: 
+    This assignment is about creating a web app that dynamically creates a multiplication table based on user input.
+    This assignment served as a way to implement javascript basics and error handling.
+
+Eljohn Agojo, UMass Lowell Computer Science, eljohn_agojo@student.uml.edu
+Copyright (c) 2024 by Eljohn. All rights reserved. May be freely copied or 
+excerpted for educational purposes with credit to the author.
+*/
+
+/* General Page Styling: sets the background, font, and text color for the page */
 body {
     background-color: black;
     font-family: 'Courier New', Courier, monospace;
     color: white;
 }
 
-/* Main Content Layout */
+/* Main Content Layout: centers content and applies a grid layout */
 #main {
     width: 100%;
     margin: 0 auto;
     display: grid;
 }
 
-/* Wrapper Styling */
+/* Wrapper Styling: provides padding, borders, and layout for the main content area */
 #wrapper {
     width: 80%;
     padding: 20px;
@@ -21,18 +35,20 @@ body {
     margin: 30px auto;
 }
 
-/* Form Layout and Styling */
+/* Form Layout and Styling: sets layout, gap, and positioning for the input form */
 #form-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
+/* Form Group Layout: controls the layout of individual input fields */
 .form-group {
     position: relative;
-    width: 25%;
+    width: 20%;
 }
 
+/* Input Styling: customizes input appearance and focus effects */
 .form-group input {
     width: 100%;
     padding: 10px 5px;
@@ -45,7 +61,7 @@ body {
     transition: border-bottom 0.3s ease-in-out;
 }
 
-/* Floating Label Animation */
+/* Floating Label Animation: animates label movement when input is focused */
 .form-group label {
     position: absolute;
     top: 10px;
@@ -57,6 +73,7 @@ body {
     padding-left: 10px;
 }
 
+/* Label Position: moves label above input when focused or not empty */
 .form-group input:focus + label,
 .form-group input:not(:placeholder-shown) + label {
     top: -15px;
@@ -64,11 +81,12 @@ body {
     color: #aaa;
 }
 
+/* Input Focus Effect: changes border color on focus */
 .form-group input:focus {
     border-bottom: 2px solid #fff;
 }
 
-/* Button Styling */
+/* Button Styling: styles the submit button, including hover effects */
 button[type="submit"] {
     width: 10%;
     padding: 8px 15px;
@@ -86,7 +104,7 @@ button[type="submit"]:hover {
     color: black;
 }
 
-/* Header Styling */
+/* Header Styling: styles the main heading of the page */
 h1 {
     text-align: center;
     color: white;
@@ -96,19 +114,22 @@ h1 {
     width: 80%;
 }
 
-/* Table Container */
+/* Table Container Styling: adds scrollability and size limits for large tables */
 #table-container {
     margin: 20px auto;
     width: 80%;
-    overflow: auto;
+    overflow: auto; /* Enables scrolling */
+    max-width: 950px;
+    max-height: 500px;
 }
 
-/* Table Styling */
+/* Table Structure: sets the width and layout of the table */
 #table-container table {
     width: 100%;
     border-collapse: collapse;
 }
 
+/* Cell Styling: general styling for table headers and data cells */
 #table-container th,
 #table-container td {
     border: 1px solid #ffffff;
@@ -116,24 +137,36 @@ h1 {
     text-align: center;
 }
 
-/* Header and Row Styling */
+/* Header Styling: makes the header row sticky */
 #table-container th {
     background-color: #333333;
     position: sticky;
+    top: 0;
+    z-index: 2; 
 }
 
+/* First Column Styling: makes the first column sticky and aligns it with the header */
+#table-container th:first-child,
+#table-container td:first-child {
+    position: sticky;
+    left: 0;
+    background-color: #333333; 
+    z-index: 1; 
+}
+
+/* Row Styling: adds a background color for even rows to improve readability */
 #table-container tr:nth-child(even) td {
     background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* 3D Hover Effect for Table Cells */
+/* 3D Hover Effect: adds hover and glow effects to table cells */
 #table-container td {
     transition: transform 0.1s ease, box-shadow 0.1s ease;
     will-change: transform, box-shadow;
     perspective: 800px;
 }
 
-/* Glow Effect */
+/* Glow Effect on Hover */
 #table-container td::before {
     content: '';
     position: absolute;
@@ -148,28 +181,28 @@ h1 {
 }
 
 #table-container td:hover {
-    transform: translateZ(10px);
+    transform: translateZ(10px); /* 3D effect */
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
 }
 
 #table-container td:hover::before {
-    opacity: 1;
+    opacity: 1; /* Displays glow effect */
 }
 
-/* Table Row Animation */
+/* Row Animation: applies a fade-in effect when rows are added */
 #table-container tr {
     opacity: 1;
     transition: opacity 0.5s ease;
 }
 
-
+/* Responsive Design for Smaller Screens */
 @media (max-width: 768px) {
     .form-group {
-        flex: 1 1 100%;
+        flex: 1 1 100%; /* Full width inputs on smaller screens */
     }
 
     button[type="submit"] {
-        width: 100%;
+        width: 30%; /* Full width button on smaller screens */
     }
 
     h1 {
@@ -182,24 +215,5 @@ h1 {
 
     .form-group label {
         font-size: 12px;
-    }
-}
-
-@media (max-width: 480px) {
-    #wrapper {
-        width: 95%;
-        padding: 10px;
-    }
-
-    h1 {
-        font-size: 20px;
-    }
-
-    .form-group input {
-        font-size: 12px;
-    }
-
-    .form-group label {
-        font-size: 10px;
     }
 }
