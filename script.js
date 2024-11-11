@@ -260,11 +260,6 @@ $(document).ready(function () {
         const tableContainer = $("<div>").addClass("table-container");
         tableContainer.append(table);
 
-        // Add a checkbox for deletion
-        tableContainer.prepend(
-            `<label><input type="checkbox" class="delete-tab-checkbox" data-tab-id="#${tabId}"> Select for Deletion</label>`
-        );
-
         return tableContainer;
     }
 
@@ -279,12 +274,8 @@ $(document).ready(function () {
         $("#tabs").tabs("refresh");
     }
 
-    // Add Delete Tabs Button
-    if ($("#delete-tabs-button").length === 0) {
-        const deleteButton = $('<button id="delete-tabs-button">Delete Selected Tabs</button>');
-        deleteButton.click(deleteSelectedTabs);
-        $("#tabs").before(deleteButton);
-    }
+    // Add Delete Tabs Button click event
+    $("#delete-tabs-button").click(deleteSelectedTabs);
 
     // Initialize sliders after document is ready
     initializeSliders();
