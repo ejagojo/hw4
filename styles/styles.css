@@ -221,6 +221,7 @@ h1 {
     transition: opacity 0.5s ease;
 }
 
+
 /* Error Message Styling: styles error messages displayed under input fields */
 .error-message {
     color: #ff6666; /* Red color for error */

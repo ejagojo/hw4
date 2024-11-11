@@ -114,40 +114,67 @@ $(document).ready(function () {
         return parseFloat(value) >= parseFloat($(param).val());
     }, "Value must be greater than or equal to {0}");
 
-    // Function to generate the multiplication table
-    function generateTable() {
-        const minCol = parseInt($("#min_col_value").val());
-        const maxCol = parseInt($("#max_col_value").val());
-        const minRow = parseInt($("#min_row_value").val());
-        const maxRow = parseInt($("#max_row_value").val());
+// Function to generate the multiplication table with animation
+function generateTable() {
+    const minCol = parseInt($("#min_col_value").val());
+    const maxCol = parseInt($("#max_col_value").val());
+    const minRow = parseInt($("#min_row_value").val());
+    const maxRow = parseInt($("#max_row_value").val());
 
-        console.log("Generating table with inputs:", { minCol, maxCol, minRow, maxRow });
+    console.log("Generating table with inputs:", { minCol, maxCol, minRow, maxRow });
 
-        const table = $("<table>").attr("id", "multiplication-table");
-        const headerRow = $("<tr>");
-        headerRow.append($("<th>")); // Top-left empty cell
-        for (let col = minCol; col <= maxCol; col++) {
-            headerRow.append($("<th>").text(col));
-        }
-        table.append(headerRow);
+    // Clear any existing table
+    $("#table-container").empty();
 
-        for (let row = minRow; row <= maxRow; row++) {
-            const tableRow = $("<tr>");
-            tableRow.append($("<th>").text(row));
+    // Create the table element
+    const table = $("<table>").attr("id", "multiplication-table");
 
-            for (let col = minCol; col <= maxCol; col++) {
-                tableRow.append($("<td>").text(row * col));
-            }
-
-            table.append(tableRow);
-        }
-
-        // Update the table in the input form tab
-        $("#table-container").empty();
-        const tableContainer = $("<div>").addClass("table-container");
-        tableContainer.append(table);
-        $("#table-container").append(tableContainer);
+    // Create the header row
+    const headerRow = $("<tr>");
+    headerRow.append($("<th>")); // Top-left empty cell
+    for (let col = minCol; col <= maxCol; col++) {
+        const th = $("<th>").text(col);
+        headerRow.append(th);
     }
+    table.append(headerRow);
+
+    // Append the table to the container before adding rows
+    const tableContainer = $("<div>").addClass("table-container");
+    tableContainer.append(table);
+    $("#table-container").append(tableContainer);
+
+    // Animate rows
+    let rowCount = 0;
+    const animationDelay = 100; // Delay between rows in milliseconds
+
+    for (let row = minRow; row <= maxRow; row++) {
+        // Use closure to capture the current value of 'row'
+        (function (row) {
+            setTimeout(function () {
+                const tableRow = $("<tr>");
+
+                // Row header
+                const rowHeaderCell = $("<th>").text(row);
+                tableRow.append(rowHeaderCell);
+
+                // Populate cells
+                for (let col = minCol; col <= maxCol; col++) {
+                    const cell = $("<td>").text(row * col);
+                    tableRow.append(cell);
+                }
+
+                // Append the row to the table
+                table.append(tableRow);
+
+                // Trigger reflow and set opacity to 1
+                tableRow[0].offsetWidth; // Trigger reflow
+                tableRow.css("opacity", "1"); // Start the fade-in animation
+            }, animationDelay * rowCount);
+            rowCount++;
+        })(row);
+    }
+}
+
 
     // Function to create a new tab with the generated table
     function createTab() {
