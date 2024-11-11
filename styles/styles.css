@@ -1,25 +1,28 @@
 /*
 Name: Eljohn(EJ) Agojo
-Date: 10/28/2024
+Date: 11/10/2024
 File: styles.css
 
 GUI Assignment:
     This assignment is about creating a web app that dynamically creates a multiplication table based on user input.
-    This assignment served as a way to implement JavaScript basics and error handling.
+    This assignment served as a way to implement JavaScript basics and error handling. Now adding to the table generation
+    We implemented jQuery for more powerful error handling and used jQuery UI plugin for implementing a slider for our input
+    values
 
 Eljohn Agojo, UMass Lowell Computer Science, eljohn_agojo@student.uml.edu
 Copyright (c) 2024 by Eljohn.
-All rights reserved. May be freely copied or excerpted for educational purposes with credit to the author.
+All rights reserved. May be freely copied or
+excerpted for educational purposes with credit to the author.
 */
 
-/* General Page Styling: sets the background, font, and text color for the page */
+/* General Page Styling: sets the background color, font family, and text color for the entire page */
 body {
     background-color: black;
     font-family: 'Courier New', Courier, monospace;
     color: white;
 }
 
-/* Main Content Layout: centers content and applies a grid layout */
+/* Main Content Layout: centers the main content and applies a grid layout */
 #main {
     width: 100%;
     margin: 0 auto;
@@ -86,13 +89,13 @@ body {
     border-bottom: 2px solid #fff;
 }
 
-/* Slider Styling */
+/* Slider Styling: adds margin above sliders */
 .slider {
     margin-top: 20px;
 }
 
 /* Button Styling: styles the submit button, including hover effects */
-button[type="submit"] {
+button[type="button"] {
     width: 10%;
     padding: 8px 15px;
     font-size: 16px;
@@ -104,12 +107,12 @@ button[type="submit"] {
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
-button[type="submit"]:hover {
+button[type="button"]:hover {
     background-color: #ffffff;
     color: black;
 }
 
-/* Delete Tabs Button Styling */
+/* Delete Tabs Button Styling: styles the delete button with a red background */
 #delete-tabs-button {
     width: 20%;
     padding: 8px 15px;
@@ -189,7 +192,7 @@ h1 {
     position: relative;
 }
 
-/* Glow Effect on Hover */
+/* Glow Effect on Hover: creates a glow effect when hovering over table cells */
 .table-container td::before {
     content: '';
     position: absolute;
@@ -218,7 +221,7 @@ h1 {
     transition: opacity 0.5s ease;
 }
 
-/* Error Message Styling */
+/* Error Message Styling: styles error messages displayed under input fields */
 .error-message {
     color: #ff6666; /* Red color for error */
     font-size: 12px;
@@ -236,11 +239,12 @@ h1 {
     }
 }
 
-/* Tabs Styling */
+/* Tabs Styling: styles the tabs container */
 #tabs {
     width: 100%;
 }
 
+/* Tabs List Styling: styles the list of tabs */
 #tabs ul {
     background-color: #222;
     padding: 0;
@@ -250,10 +254,12 @@ h1 {
     border-bottom: 1px solid #444;
 }
 
+/* Individual Tab Styling: removes margin from tabs */
 #tabs ul li {
     margin: 0;
 }
 
+/* Tab Link Styling: styles the links within the tabs */
 #tabs ul li a {
     display: block;
     padding: 10px 20px;
@@ -261,19 +267,21 @@ h1 {
     text-decoration: none;
 }
 
+/* Active and Hovered Tab Styling: changes background and text color */
 #tabs ul li a:hover,
 #tabs ul li.ui-tabs-active a {
     background-color: #000000;
     color: white;
 }
 
+/* Tab Panel Styling: styles the content area of each tab */
 #tabs .ui-tabs-panel {
     background-color: black;
     color: white;
     padding: 20px;
 }
 
-/* Slider Value Display Styling */
+/* Slider Value Display Styling: positions the value above the slider handle */
 .ui-slider .ui-slider-handle .slider-value {
     position: absolute;
     top: -25px; /* Position the value above the handle */
@@ -286,11 +294,12 @@ h1 {
     pointer-events: none; /* Ensure the value doesn't interfere with dragging */
 }
 
+/* Slider Styling: adjusts margin to accommodate the value display */
 .ui-slider {
     margin-top: 40px; /* Adjust to accommodate the value display */
 }
 
-/* Optional: Adjust the slider handle size for better visibility */
+/* Slider Handle Styling: adjusts the slider handle size for better visibility */
 .ui-slider .ui-slider-handle {
     width: 1.2em;
     height: 1.2em;
@@ -298,26 +307,32 @@ h1 {
 
 /* Responsive Design for Smaller Screens */
 @media (max-width: 768px) {
+    /* Form Group Adjustment: makes form fields full width */
     .form-group {
         width: 100%;
     }
 
+    /* Submit Button Adjustment: makes the button full width */
     button[type="submit"] {
         width: 100%;
     }
 
+    /* Delete Tabs Button Adjustment: makes the button full width */
     #delete-tabs-button {
         width: 100%;
     }
 
+    /* Header Font Size Adjustment: reduces the font size */
     h1 {
         font-size: 24px;
     }
 
+    /* Input Font Size Adjustment: reduces the font size */
     .form-group input {
         font-size: 14px;
     }
 
+    /* Label Font Size Adjustment: reduces the font size */
     .form-group label {
         font-size: 12px;
     }

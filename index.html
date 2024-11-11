@@ -1,16 +1,18 @@
-<!--
+<!-- 
 Name: Eljohn(EJ) Agojo
-Date: 10/28/2024
+Date: 11/10/2024
 File: index.html
 
 GUI Assignment:
     This assignment is about creating a web app that dynamically creates a multiplication table based on user input.
-    This assignment served as a way to implement JavaScript basics and error handling.
+    This assignment served as a way to implement JavaScript basics and error handling. Now adding to the table generation
+    We implemented jQuery for more powerful error handling and used jQuery UI plugin for implementing a slider for our input
+    values
 
 Eljohn Agojo, UMass Lowell Computer Science, eljohn_agojo@student.uml.edu
-Copyright (c) 2024 by Eljohn.
-All rights reserved. May be freely copied or excerpted for educational purposes with credit to the author.
--->
+Copyright (c) 2024 by Eljohn. All rights reserved. May be freely copied or 
+excerpted for educational purposes with credit to the author.
+ -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -71,7 +73,10 @@ All rights reserved. May be freely copied or excerpted for educational purposes 
                             <div id="max_row_slider" class="slider"></div>
                         </div>
                         <div class="button-container">
-                            <button type="submit">Generate Table and Tab</button>
+                            <!-- Generate Table Button -->
+                            <button type="button" id="generate-table-button">Generate Table</button>
+                            <!-- Add Table to Tab Button -->
+                            <button type="button" id="add-tab-button">Add This Table to a Tab</button>
                         </div>
                     </form>
                     <!-- Table container within the first tab -->
