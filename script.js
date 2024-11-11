@@ -6,21 +6,25 @@ $(document).ready(function () {
         rules: {
             minimum_col_value: {
                 required: true,
-                number: true
+                number: true,
+                range: [-50, 50]
             },
             max_col_value: {
                 required: true,
                 number: true,
-                greaterThanOrEqual: "#min_col_value"  // Custom rule for max_col_value >= min_col_value
+                greaterThanOrEqual: "#min_col_value",  // Custom rule for max_col_value >= min_col_value
+                range: [-50, 50]
             },
             min_row_value: {
                 required: true,
-                number: true
+                number: true,
+                range: [-50, 50]
             },
             max_row_value: {
                 required: true,
                 number: true,
-                greaterThanOrEqual: "#min_row_value"  // Custom rule for max_row_value >= min_row_value
+                greaterThanOrEqual: "#min_row_value",  // Custom rule for max_row_value >= min_row_value
+                range: [-50, 50]
             }
         },
         messages: {
