@@ -257,13 +257,14 @@ h1 {
 #tabs ul li a {
     display: block;
     padding: 10px 20px;
-    color: white;
+    color: rgb(0, 0, 0);
     text-decoration: none;
 }
 
 #tabs ul li a:hover,
 #tabs ul li.ui-tabs-active a {
-    background-color: #333;
+    background-color: #000000;
+    color: white;
 }
 
 #tabs .ui-tabs-panel {

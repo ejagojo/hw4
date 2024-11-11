@@ -213,9 +213,12 @@ $(document).ready(function () {
         // Create the tab label
         const tabLabel = `[${minCol}, ${maxCol}] x [${minRow}, ${maxRow}]`;
 
-        // Add the new tab
+        // Add the new tab with close icon
         $("#tabs ul").append(
-            `<li><a href="#${tabId}">${tabLabel}</a> <span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>`
+            `<li>
+                <a href="#${tabId}">${tabLabel}</a>
+                <span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span>
+            </li>`
         );
         $("#tabs").append(`<div id="${tabId}"></div>`);
 
@@ -223,17 +226,18 @@ $(document).ready(function () {
         const table = generateTableForTab(minCol, maxCol, minRow, maxRow);
         $(`#${tabId}`).append(table);
 
+        // Add a checkbox for deletion
+        $(`#${tabId}`).prepend(
+            `<label>
+                <input type="checkbox" class="delete-tab-checkbox" data-tab-id="#${tabId}"> Select for Deletion
+            </label>`
+        );
+
         // Refresh the tabs widget
         $("#tabs").tabs("refresh");
         $("#tabs").tabs("option", "active", tabIndex);
-
-        // Add close event to the tab
-        $("#tabs").delegate("span.ui-icon-close", "click", function () {
-            const panelId = $(this).closest("li").remove().attr("aria-controls");
-            $("#" + panelId).remove();
-            $("#tabs").tabs("refresh");
-        });
     }
+
 
     // Function to generate table for the new tab
     function generateTableForTab(minCol, maxCol, minRow, maxRow) {
@@ -263,13 +267,21 @@ $(document).ready(function () {
         return tableContainer;
     }
 
+    // Event delegation for closing individual tabs via close icon
+    $("#tabs").on("click", "span.ui-icon-close", function () {
+        const panelId = $(this).closest("li").remove().attr("aria-controls");
+        $("#" + panelId).remove();
+        $("#tabs").tabs("refresh");
+    });
+
     // Function to delete selected tabs
     function deleteSelectedTabs() {
         $(".delete-tab-checkbox:checked").each(function () {
             const tabId = $(this).attr("data-tab-id");
-            const tabIndex = $(`#tabs a[href='${tabId}']`).parent().index();
-            $(tabId).remove();
-            $("#tabs").find(`li:eq(${tabIndex})`).remove();
+            const tabAnchor = $(`#tabs a[href='${tabId}']`);
+            const panelId = tabAnchor.attr("href");
+            tabAnchor.closest("li").remove(); // Remove tab
+            $(panelId).remove(); // Remove tab content
         });
         $("#tabs").tabs("refresh");
     }
