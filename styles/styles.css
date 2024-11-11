@@ -273,6 +273,29 @@ h1 {
     padding: 20px;
 }
 
+/* Slider Value Display Styling */
+.ui-slider .ui-slider-handle .slider-value {
+    position: absolute;
+    top: -25px; /* Position the value above the handle */
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black;
+    pointer-events: none; /* Ensure the value doesn't interfere with dragging */
+}
+
+.ui-slider {
+    margin-top: 40px; /* Adjust to accommodate the value display */
+}
+
+/* Optional: Adjust the slider handle size for better visibility */
+.ui-slider .ui-slider-handle {
+    width: 1.2em;
+    height: 1.2em;
+}
+
 /* Responsive Design for Smaller Screens */
 @media (max-width: 768px) {
     .form-group {

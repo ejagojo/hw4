@@ -22,15 +22,20 @@ $(document).ready(function () {
     const minRange = -50;
     const maxRange = 50;
 
-    // Initialize Sliders with two-way binding
+    // Initialize Sliders with two-way binding and value display
     function initializeSliders() {
         // Minimum Column Value Slider
         $("#min_col_slider").slider({
             min: minRange,
             max: maxRange,
             value: 0,
+            create: function () {
+                // Append a span to display the value on the handle
+                $(this).find('.ui-slider-handle').append(`<span class="slider-value">${$(this).slider("value")}</span>`);
+            },
             slide: function (event, ui) {
                 $("#min_col_value").val(ui.value).trigger("input");
+                $(this).find('.slider-value').text(ui.value); // Update the handle value display
             }
         });
 
@@ -39,8 +44,12 @@ $(document).ready(function () {
             min: minRange,
             max: maxRange,
             value: 0,
+            create: function () {
+                $(this).find('.ui-slider-handle').append(`<span class="slider-value">${$(this).slider("value")}</span>`);
+            },
             slide: function (event, ui) {
                 $("#max_col_value").val(ui.value).trigger("input");
+                $(this).find('.slider-value').text(ui.value);
             }
         });
 
@@ -49,8 +58,12 @@ $(document).ready(function () {
             min: minRange,
             max: maxRange,
             value: 0,
+            create: function () {
+                $(this).find('.ui-slider-handle').append(`<span class="slider-value">${$(this).slider("value")}</span>`);
+            },
             slide: function (event, ui) {
                 $("#min_row_value").val(ui.value).trigger("input");
+                $(this).find('.slider-value').text(ui.value);
             }
         });
 
@@ -59,8 +72,12 @@ $(document).ready(function () {
             min: minRange,
             max: maxRange,
             value: 0,
+            create: function () {
+                $(this).find('.ui-slider-handle').append(`<span class="slider-value">${$(this).slider("value")}</span>`);
+            },
             slide: function (event, ui) {
                 $("#max_row_value").val(ui.value).trigger("input");
+                $(this).find('.slider-value').text(ui.value);
             }
         });
 
@@ -68,6 +85,7 @@ $(document).ready(function () {
         $("#min_col_value").on("input", function () {
             const value = parseInt($(this).val()) || 0;
             $("#min_col_slider").slider("value", value);
+            $("#min_col_slider").find('.slider-value').text(value);
             if ($("#form-container").valid()) {
                 generateTable();
             }
@@ -76,6 +94,7 @@ $(document).ready(function () {
         $("#max_col_value").on("input", function () {
             const value = parseInt($(this).val()) || 0;
             $("#max_col_slider").slider("value", value);
+            $("#max_col_slider").find('.slider-value').text(value);
             if ($("#form-container").valid()) {
                 generateTable();
             }
@@ -84,6 +103,7 @@ $(document).ready(function () {
         $("#min_row_value").on("input", function () {
             const value = parseInt($(this).val()) || 0;
             $("#min_row_slider").slider("value", value);
+            $("#min_row_slider").find('.slider-value').text(value);
             if ($("#form-container").valid()) {
                 generateTable();
             }
@@ -92,11 +112,13 @@ $(document).ready(function () {
         $("#max_row_value").on("input", function () {
             const value = parseInt($(this).val()) || 0;
             $("#max_row_slider").slider("value", value);
+            $("#max_row_slider").find('.slider-value').text(value);
             if ($("#form-container").valid()) {
                 generateTable();
             }
         });
     }
+
 
     // Initialize validation on the form
     $("#form-container").validate({
