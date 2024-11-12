@@ -14,44 +14,45 @@ Copyright (c) 2024 by Eljohn.
 All rights reserved. May be freely copied or
 excerpted for educational purposes with credit to the author.
 */
-
-/* General Page Styling: sets the background color, font family, and text color for the entire page */
+/* General Page Styling */
 body {
     background-color: black;
     font-family: 'Courier New', Courier, monospace;
     color: white;
 }
 
-/* Main Content Layout: centers the main content and applies a grid layout */
+/* Main Content Layout */
 #main {
     width: 100%;
     margin: 0 auto;
     display: grid;
 }
 
-/* Wrapper Styling: provides padding, borders, and layout for the main content area */
+/* Wrapper Styling */
 #wrapper {
     width: 80%;
     padding: 20px;
     border: 1px solid #ffffff;
     border-radius: 10px;
     margin: 30px auto;
+    box-sizing: border-box; 
 }
 
-/* Form Layout and Styling: sets layout, gap, and positioning for the input form */
+/* Form Layout and Styling */
 #form-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-/* Form Group Layout: controls the layout of individual input fields */
+/* Form Group Layout */
 .form-group {
     position: relative;
     width: 20%;
+    margin-bottom: 20px;
 }
 
-/* Input Styling: customizes input appearance and focus effects */
+/* Input Styling */
 .form-group input {
     width: 100%;
     padding: 10px 5px;
@@ -64,7 +65,7 @@ body {
     transition: border-bottom 0.3s ease-in-out;
 }
 
-/* Floating Label Animation: animates label movement when input is focused */
+/* Floating Label Animation */
 .form-group label {
     position: absolute;
     top: 10px;
@@ -76,7 +77,7 @@ body {
     padding-left: 10px;
 }
 
-/* Label Position: moves label above input when focused or not empty */
+/* Label Position */
 .form-group input:focus + label,
 .form-group input:not(:placeholder-shown) + label {
     top: -15px;
@@ -84,17 +85,17 @@ body {
     color: #aaa;
 }
 
-/* Input Focus Effect: changes border color on focus */
+/* Input Focus Effect */
 .form-group input:focus {
     border-bottom: 2px solid #fff;
 }
 
-/* Slider Styling: adds margin above sliders */
+/* Slider Styling */
 .slider {
     margin-top: 20px;
 }
 
-/* Button Styling: styles the submit button, including hover effects */
+/* Button Styling */
 button[type="button"] {
     width: 10%;
     padding: 8px 15px;
@@ -105,6 +106,7 @@ button[type="button"] {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    margin-bottom: 10px;
 }
 
 button[type="button"]:hover {
@@ -112,7 +114,7 @@ button[type="button"]:hover {
     color: black;
 }
 
-/* Delete Tabs Button Styling: styles the delete button with a red background */
+/* Delete Tabs Button Styling */
 #delete-tabs-button {
     width: 20%;
     padding: 8px 15px;
@@ -129,7 +131,7 @@ button[type="button"]:hover {
     background-color: #ff3333;
 }
 
-/* Header Styling: styles the main heading of the page */
+/* Header Styling */
 h1 {
     text-align: center;
     color: white;
@@ -139,22 +141,22 @@ h1 {
     width: 80%;
 }
 
-/* Table Container Styling: adds scrollability and size limits for large tables */
+/* Table Container Styling */
 .table-container {
     margin: 20px auto;
     width: 80%;
-    overflow: auto; /* Enables scrolling */
+    overflow: auto;
     max-width: 950px;
     max-height: 500px;
 }
 
-/* Table Structure: sets the width and layout of the table */
+/* Table Structure */
 .table-container table {
     width: 100%;
     border-collapse: collapse;
 }
 
-/* Cell Styling: general styling for table headers and data cells */
+/* Cell Styling */
 .table-container th,
 .table-container td {
     border: 1px solid #ffffff;
@@ -162,7 +164,7 @@ h1 {
     text-align: center;
 }
 
-/* Header Styling: makes the header row sticky */
+/* Header Styling */
 .table-container th {
     background-color: #333333;
     position: sticky;
@@ -170,7 +172,7 @@ h1 {
     z-index: 2;
 }
 
-/* First Column Styling: makes the first column sticky and aligns it with the header */
+/* First Column Styling */
 .table-container th:first-child,
 .table-container td:first-child {
     position: sticky;
@@ -179,12 +181,12 @@ h1 {
     z-index: 1;
 }
 
-/* Row Styling: adds a background color for even rows to improve readability */
+/* Row Styling */
 .table-container tr:nth-child(even) td {
     background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* 3D Hover Effect: adds hover and glow effects to table cells */
+/* 3D Hover Effect */
 .table-container td {
     transition: transform 0.1s ease, box-shadow 0.1s ease;
     will-change: transform, box-shadow;
@@ -192,7 +194,7 @@ h1 {
     position: relative;
 }
 
-/* Glow Effect on Hover: creates a glow effect when hovering over table cells */
+/* Glow Effect on Hover */
 .table-container td::before {
     content: '';
     position: absolute;
@@ -207,45 +209,37 @@ h1 {
 }
 
 .table-container td:hover {
-    transform: translateZ(10px); /* 3D effect */
+    transform: translateZ(10px);
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
 }
 
 .table-container td:hover::before {
-    opacity: 1; /* Displays glow effect */
+    opacity: 1;
 }
 
-/* Row Animation: applies a fade-in effect when rows are added */
+/* Row Animation */
 .table-container tr {
     opacity: 1;
     transition: opacity 0.5s ease;
 }
 
-
-/* Error Message Styling: styles error messages displayed under input fields */
+/* Error Message Styling */
 .error-message {
-    color: #ff6666; /* Red color for error */
+    color: #ff6666;
     font-size: 12px;
     margin-left: 10px;
     display: inline-block;
     white-space: nowrap;
 }
 
-/* Ensure smaller screens display errors well */
-@media (max-width: 768px) {
-    .error-message {
-        margin-left: 0;
-        display: block;
-        margin-top: 5px;
-    }
-}
-
-/* Tabs Styling: styles the tabs container */
+/* Tabs Styling */
 #tabs {
     width: 100%;
 }
 
-/* Tabs List Styling: styles the list of tabs */
+
+
+/* Tabs List Styling */
 #tabs ul {
     background-color: #222;
     padding: 0;
@@ -253,54 +247,61 @@ h1 {
     list-style: none;
     display: flex;
     border-bottom: 1px solid #444;
+    overflow-x: auto;
 }
 
-/* Individual Tab Styling: removes margin from tabs */
+/* Individual Tab Styling */
 #tabs ul li {
     margin: 0;
+    flex: 0 0 auto;
 }
 
-/* Tab Link Styling: styles the links within the tabs */
+/* Tab Link Styling */
 #tabs ul li a {
     display: block;
     padding: 10px 20px;
     color: rgb(0, 0, 0);
     text-decoration: none;
+    white-space: nowrap;
 }
 
-/* Active and Hovered Tab Styling: changes background and text color */
+/* Active and Hovered Tab Styling */
 #tabs ul li a:hover,
 #tabs ul li.ui-tabs-active a {
     background-color: #000000;
     color: white;
 }
 
-/* Tab Panel Styling: styles the content area of each tab */
+/* Tab Panel Styling */
 #tabs .ui-tabs-panel {
     background-color: black;
     color: white;
     padding: 20px;
+    margin: 0 auto;
+    overflow: auto; /* Enable scrolling if content overflows */
+    box-sizing: border-box;
 }
 
-/* Slider Value Display Styling: positions the value above the slider handle */
+
+/* Slider Value Display Styling */
 .ui-slider .ui-slider-handle .slider-value {
     position: absolute;
-    top: -25px; /* Position the value above the handle */
+    top: -25px;
     left: 50%;
     transform: translateX(-50%);
     color: white;
     font-size: 14px;
     font-weight: bold;
     text-shadow: 1px 1px 2px black;
-    pointer-events: none; /* Ensure the value doesn't interfere with dragging */
+    pointer-events: none;
 }
 
-/* Slider Styling: adjusts margin to accommodate the value display */
+/* Slider Styling */
 .ui-slider {
-    margin-top: 40px; /* Adjust to accommodate the value display */
+    margin-top: 40px;
 }
 
-/* Slider Handle Styling: adjusts the slider handle size for better visibility */
+/* Slider Handle Styling */
 .ui-slider .ui-slider-handle {
     width: 1.2em;
     height: 1.2em;
@@ -308,33 +309,64 @@ h1 {
 
 /* Responsive Design for Smaller Screens */
 @media (max-width: 768px) {
-    /* Form Group Adjustment: makes form fields full width */
+    /* Wrapper Adjustment */
+    #wrapper {
+        width: 95%;
+        padding: 10px;
+        margin: 20px auto;
+    }
+
+    /* Form Group Adjustment */
     .form-group {
         width: 100%;
+        margin-bottom: 20px;
     }
 
-    /* Submit Button Adjustment: makes the button full width */
-    button[type="submit"] {
-        width: 100%;
+    /* Input Font Size Adjustment */
+    .form-group input {
+        font-size: 16px;
     }
 
-    /* Delete Tabs Button Adjustment: makes the button full width */
+    /* Label Font Size Adjustment */
+    .form-group label {
+        font-size: 14px;
+    }
+
+    /* Button Adjustment */
+    button[type="button"],
     #delete-tabs-button {
         width: 100%;
+        font-size: 18px;
+        padding: 12px 20px;
     }
 
-    /* Header Font Size Adjustment: reduces the font size */
+    /* Button Container Adjustment */
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Adjust table container width */
+    .table-container {
+        width: 100%;
+    }
+
+    /* Header Font Size Adjustment */
     h1 {
         font-size: 24px;
     }
 
-    /* Input Font Size Adjustment: reduces the font size */
-    .form-group input {
-        font-size: 14px;
+    /* Error Message Styling */
+    .error-message {
+        margin-left: 0;
+        display: block;
+        margin-top: 5px;
     }
 
-    /* Label Font Size Adjustment: reduces the font size */
-    .form-group label {
-        font-size: 12px;
+    /* Adjust tab padding and font size */
+    #tabs ul li a {
+        padding: 10px 10px;
+        font-size: 14px;
     }
 }
