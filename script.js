@@ -20,11 +20,9 @@ $(document).ready(function () {
     // Initialize jQuery UI Tabs
     $("#tabs").tabs();
 
-    // Define the range for sliders and inputs
     const minRange = -50;
     const maxRange = 50;
 
-    // Initialize Sliders with two-way binding and value display
     function initializeSliders() {
         const sliders = [
             { slider: "#min_col_slider", input: "#min_col_value" },
@@ -39,9 +37,7 @@ $(document).ready(function () {
                 max: maxRange,
                 value: 0,
                 create: function () {
-                    $(this)
-                        .find(".ui-slider-handle")
-                        .append(`<span class="slider-value">${$(this).slider("value")}</span>`);
+                    $(this).find(".ui-slider-handle").append(`<span class="slider-value">${$(this).slider("value")}</span>`);
                 },
                 slide: function (event, ui) {
                     $(input).val(ui.value);
@@ -53,7 +49,6 @@ $(document).ready(function () {
             });
         });
 
-        // Sync sliders and inputs
         sliders.forEach(({ slider, input }) => {
             $(input).on("input", function () {
                 const value = parseInt($(this).val()) || 0;
@@ -66,7 +61,7 @@ $(document).ready(function () {
         });
     }
 
-    // Initialize validation on the form
+
     $("#form-container").validate({
         rules: {
             minimum_col_value: {
@@ -117,7 +112,7 @@ $(document).ready(function () {
             }
         },
         errorPlacement: function (error, element) {
-            error.addClass("error-message"); // Apply custom styling class
+            error.addClass("error-message");
             error.insertAfter(element.parent());
         },
     });
@@ -126,67 +121,66 @@ $(document).ready(function () {
         return parseFloat(value) >= parseFloat($(param).val());
     }, "Value must be greater than or equal to {0}");
 
-// Function to generate the multiplication table with animation
-function generateTable() {
-    const minCol = parseInt($("#min_col_value").val());
-    const maxCol = parseInt($("#max_col_value").val());
-    const minRow = parseInt($("#min_row_value").val());
-    const maxRow = parseInt($("#max_row_value").val());
+    // Function to generate the multiplication table with animation
+    function generateTable() {
+        const minCol = parseInt($("#min_col_value").val());
+        const maxCol = parseInt($("#max_col_value").val());
+        const minRow = parseInt($("#min_row_value").val());
+        const maxRow = parseInt($("#max_row_value").val());
 
-    console.log("Generating table with inputs:", { minCol, maxCol, minRow, maxRow });
+        console.log("Generating table with inputs:", { minCol, maxCol, minRow, maxRow });
 
-    // Clear any existing table
-    $("#table-container").empty();
+        // Clear any existing table
+        $("#table-container").empty();
 
-    // Create the table element
-    const table = $("<table>").attr("id", "multiplication-table");
+        // Create the table element
+        const table = $("<table>").attr("id", "multiplication-table");
 
-    // Create the header row
-    const headerRow = $("<tr>");
-    headerRow.append($("<th>")); // Top-left empty cell
-    for (let col = minCol; col <= maxCol; col++) {
-        const th = $("<th>").text(col);
-        headerRow.append(th);
+        // Create the header row
+        const headerRow = $("<tr>");
+        headerRow.append($("<th>")); // Top-left empty cell
+        for (let col = minCol; col <= maxCol; col++) {
+            const th = $("<th>").text(col);
+            headerRow.append(th);
+        }
+        table.append(headerRow);
+
+        // Append the table to the container before adding rows
+        const tableContainer = $("<div>").addClass("table-container");
+        tableContainer.append(table);
+        $("#table-container").append(tableContainer);
+
+        // Animate rows
+        let rowCount = 0;
+        const animationDelay = 100; // Delay between rows in milliseconds
+
+        for (let row = minRow; row <= maxRow; row++) {
+            // Use closure to capture the current value of 'row'
+            (function (row) {
+                setTimeout(function () {
+                    const tableRow = $("<tr>");
+
+                    // Row header
+                    const rowHeaderCell = $("<th>").text(row);
+                    tableRow.append(rowHeaderCell);
+
+                    // Populate cells
+                    for (let col = minCol; col <= maxCol; col++) {
+                        const cell = $("<td>").text(row * col);
+                        tableRow.append(cell);
+                    }
+
+                    // Append the row to the table
+                    table.append(tableRow);
+
+                    // Trigger reflow and set opacity to 1
+                    tableRow[0].offsetWidth; // Trigger reflow
+                    tableRow.css("opacity", "1"); // Start the fade-in animation
+                }, animationDelay * rowCount);
+                rowCount++;
+            })(row);
+        }
     }
-    table.append(headerRow);
-
-    // Append the table to the container before adding rows
-    const tableContainer = $("<div>").addClass("table-container");
-    tableContainer.append(table);
-    $("#table-container").append(tableContainer);
-
-    // Animate rows
-    let rowCount = 0;
-    const animationDelay = 100; // Delay between rows in milliseconds
-
-    for (let row = minRow; row <= maxRow; row++) {
-        // Use closure to capture the current value of 'row'
-        (function (row) {
-            setTimeout(function () {
-                const tableRow = $("<tr>");
-
-                // Row header
-                const rowHeaderCell = $("<th>").text(row);
-                tableRow.append(rowHeaderCell);
-
-                // Populate cells
-                for (let col = minCol; col <= maxCol; col++) {
-                    const cell = $("<td>").text(row * col);
-                    tableRow.append(cell);
-                }
-
-                // Append the row to the table
-                table.append(tableRow);
-
-                // Trigger reflow and set opacity to 1
-                tableRow[0].offsetWidth; // Trigger reflow
-                tableRow.css("opacity", "1"); // Start the fade-in animation
-            }, animationDelay * rowCount);
-            rowCount++;
-        })(row);
-    }
-}
-
 
     // Function to create a new tab with the generated table
     function createTab() {
@@ -195,55 +189,81 @@ function generateTable() {
         const minRow = parseInt($("#min_row_value").val());
         const maxRow = parseInt($("#max_row_value").val());
 
+        console.log("Creating tab with inputs:", { minCol, maxCol, minRow, maxRow });
+
+        // Check if a table has been generated
+        if ($("#table-container").is(":empty")) {
+            alert("Please generate a table first.");
+            return;
+        }
+
+        // Generate a unique tab ID
         const tabId = `tab-${Date.now()}`;
+        const tabIndex = $("#tabs ul li").length;
+
+        // Create the tab label
         const tabLabel = `[${minCol}, ${maxCol}] x [${minRow}, ${maxRow}]`;
 
+        // Add the new tab with close icon
         $("#tabs ul").append(
-            `<li><a href="#${tabId}">${tabLabel}</a><span class="ui-icon ui-icon-close">Remove Tab</span></li>`
+            `<li>
+                <a href="#${tabId}">${tabLabel}</a>
+                <span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span>
+            </li>`
         );
-        $("#tabs").append(`<div id="${tabId}">${generateTableForTab(minCol, maxCol, minRow, maxRow)}</div>`);
-        $("#tabs").tabs("refresh").tabs("option", "active", -1);
+        $("#tabs").append(`<div id="${tabId}"></div>`);
+
+        // Clone the current table and append it to the new tab
+        const clonedTable = $("#table-container").html();
+        $(`#${tabId}`).append(clonedTable);
+
+        // Add a checkbox for deletion
+        $(`#${tabId}`).prepend(
+            `<label>
+                <input type="checkbox" class="delete-tab-checkbox" data-tab-id="#${tabId}"> Select for Deletion
+            </label>`
+        );
+
+        // Refresh the tabs widget
+        $("#tabs").tabs("refresh");
+        $("#tabs").tabs("option", "active", tabIndex);
     }
 
-    function generateTableForTab(minCol, maxCol, minRow, maxRow) {
-        const table = $("<table>").attr("id", "multiplication-table");
-        const headerRow = $("<tr>").append($("<th>"));
-        for (let col = minCol; col <= maxCol; col++) {
-            headerRow.append($("<th>").text(col));
-        }
-        table.append(headerRow);
-
-        for (let row = minRow; row <= maxRow; row++) {
-            const tableRow = $("<tr>");
-            tableRow.append($("<th>").text(row));
-            for (let col = minCol; col <= maxCol; col++) {
-                tableRow.append($("<td>").text(row * col));
-            }
-            table.append(tableRow);
-        }
-
-        return $("<div>").addClass("table-container").append(table);
-    }
-
+    // Event delegation for closing individual tabs via close icon
     $("#tabs").on("click", "span.ui-icon-close", function () {
         const panelId = $(this).closest("li").remove().attr("aria-controls");
         $("#" + panelId).remove();
         $("#tabs").tabs("refresh");
     });
 
-    $("#delete-tabs-button").click(function () {
+    // Function to delete selected tabs
+    function deleteSelectedTabs() {
         $(".delete-tab-checkbox:checked").each(function () {
-            const tabId = $(this).data("tab-id");
+            const tabId = $(this).attr("data-tab-id");
             const tabAnchor = $(`#tabs a[href='${tabId}']`);
-            tabAnchor.closest("li").remove();
-            $(tabId).remove();
+            const panelId = tabAnchor.attr("href");
+            tabAnchor.closest("li").remove(); // Remove tab
+            $(panelId).remove(); // Remove tab content
         });
         $("#tabs").tabs("refresh");
-    });
+    }
 
+    // Add Delete Tabs Button click event
+    $("#delete-tabs-button").click(deleteSelectedTabs);
+
+    // Initialize sliders after document is ready
     initializeSliders();
 
-    if ($("#form-container").valid()) {
-        generateTable();
-    }
+    // Button click events
+    $("#generate-table-button").click(function () {
+        if ($("#form-container").valid()) {
+            generateTable();
+        }
+    });
+
+    $("#add-tab-button").click(function () {
+        if ($("#form-container").valid()) {
+            createTab();
+        }
+    });
 });

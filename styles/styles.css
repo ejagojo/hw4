@@ -38,6 +38,7 @@ body {
     box-sizing: border-box; 
 }
 
+
 /* Form Layout and Styling */
 #form-container {
     display: flex;
@@ -222,6 +223,25 @@ h1 {
     opacity: 1;
     transition: opacity 0.5s ease;
 }
+
+/* Red border effect for invalid inputs */
+.table-container.invalid {
+    border: 4px solid red;
+    animation: border-pulse 1s infinite alternate;
+}
+
+@keyframes border-pulse {
+    0% {
+        border-color: red;
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+    }
+    100% {
+        border-color: darkred;
+        box-shadow: 0 0 20px rgba(255, 0, 0, 1);
+    }
+}
+
+
 
 /* Error Message Styling */
 .error-message {
