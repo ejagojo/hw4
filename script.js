@@ -46,6 +46,21 @@ $(document).ready(function () {
                 slide: function (event, ui) {
                     $(input).val(ui.value);
                     $(this).find(".slider-value").text(ui.value);
+                    if ($("#form-container").valid()) {
+                        generateTable();
+                    }
+                }
+            });
+        });
+
+        // Sync sliders and inputs
+        sliders.forEach(({ slider, input }) => {
+            $(input).on("input", function () {
+                const value = parseInt($(this).val()) || 0;
+                $(slider).slider("value", value);
+                $(slider).find(".slider-value").text(value);
+                if ($("#form-container").valid()) {
+                    generateTable();
                 }
             });
         });
@@ -102,14 +117,11 @@ $(document).ready(function () {
             }
         },
         errorPlacement: function (error, element) {
-            console.log("Error message generated for:", element.attr("id"));
             error.addClass("error-message"); // Apply custom styling class
             error.insertAfter(element.parent());
         },
-        // Remove submitHandler since we're handling validation on button clicks
     });
 
-    // Custom validator for ensuring max values are greater than or equal to min values
     $.validator.addMethod("greaterThanOrEqual", function (value, element, param) {
         return parseFloat(value) >= parseFloat($(param).val());
     }, "Value must be greater than or equal to {0}");
@@ -183,81 +195,55 @@ function generateTable() {
         const minRow = parseInt($("#min_row_value").val());
         const maxRow = parseInt($("#max_row_value").val());
 
-        console.log("Creating tab with inputs:", { minCol, maxCol, minRow, maxRow });
-
-        // Check if a table has been generated
-        if ($("#table-container").is(":empty")) {
-            alert("Please generate a table first.");
-            return;
-        }
-
-        // Generate a unique tab ID
         const tabId = `tab-${Date.now()}`;
-        const tabIndex = $("#tabs ul li").length;
-
-        // Create the tab label
         const tabLabel = `[${minCol}, ${maxCol}] x [${minRow}, ${maxRow}]`;
 
-        // Add the new tab with close icon
         $("#tabs ul").append(
-            `<li>
-                <a href="#${tabId}">${tabLabel}</a>
-                <span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span>
-            </li>`
+            `<li><a href="#${tabId}">${tabLabel}</a><span class="ui-icon ui-icon-close">Remove Tab</span></li>`
         );
-        $("#tabs").append(`<div id="${tabId}"></div>`);
-
-        // Clone the current table and append it to the new tab
-        const clonedTable = $("#table-container").html();
-        $(`#${tabId}`).append(clonedTable);
-
-        // Add a checkbox for deletion
-        $(`#${tabId}`).prepend(
-            `<label>
-                <input type="checkbox" class="delete-tab-checkbox" data-tab-id="#${tabId}"> Select for Deletion
-            </label>`
-        );
-
-        // Refresh the tabs widget
-        $("#tabs").tabs("refresh");
-        $("#tabs").tabs("option", "active", tabIndex);
+        $("#tabs").append(`<div id="${tabId}">${generateTableForTab(minCol, maxCol, minRow, maxRow)}</div>`);
+        $("#tabs").tabs("refresh").tabs("option", "active", -1);
     }
 
-    // Event delegation for closing individual tabs via close icon
+    function generateTableForTab(minCol, maxCol, minRow, maxRow) {
+        const table = $("<table>").attr("id", "multiplication-table");
+        const headerRow = $("<tr>").append($("<th>"));
+        for (let col = minCol; col <= maxCol; col++) {
+            headerRow.append($("<th>").text(col));
+        }
+        table.append(headerRow);
+
+        for (let row = minRow; row <= maxRow; row++) {
+            const tableRow = $("<tr>");
+            tableRow.append($("<th>").text(row));
+            for (let col = minCol; col <= maxCol; col++) {
+                tableRow.append($("<td>").text(row * col));
+            }
+            table.append(tableRow);
+        }
+
+        return $("<div>").addClass("table-container").append(table);
+    }
+
     $("#tabs").on("click", "span.ui-icon-close", function () {
         const panelId = $(this).closest("li").remove().attr("aria-controls");
         $("#" + panelId).remove();
         $("#tabs").tabs("refresh");
     });
 
-    // Function to delete selected tabs
-    function deleteSelectedTabs() {
+    $("#delete-tabs-button").click(function () {
         $(".delete-tab-checkbox:checked").each(function () {
-            const tabId = $(this).attr("data-tab-id");
+            const tabId = $(this).data("tab-id");
             const tabAnchor = $(`#tabs a[href='${tabId}']`);
-            const panelId = tabAnchor.attr("href");
-            tabAnchor.closest("li").remove(); // Remove tab
-            $(panelId).remove(); // Remove tab content
+            tabAnchor.closest("li").remove();
+            $(tabId).remove();
         });
         $("#tabs").tabs("refresh");
-    }
+    });
 
-    // Add Delete Tabs Button click event
-    $("#delete-tabs-button").click(deleteSelectedTabs);
-
-    // Initialize sliders after document is ready
     initializeSliders();
 
-    // Button click events
-    $("#generate-table-button").click(function () {
-        if ($("#form-container").valid()) {
-            generateTable();
-        }
-    });
-
-    $("#add-tab-button").click(function () {
-        if ($("#form-container").valid()) {
-            createTab();
-        }
-    });
+    if ($("#form-container").valid()) {
+        generateTable();
+    }
 });
